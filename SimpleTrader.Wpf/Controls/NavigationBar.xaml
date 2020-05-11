@@ -8,11 +8,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="RadioButton" BasedOn="{StaticResource NavButton}"></Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="Simple Text" Background="{StaticResource BrushPrimary1}"></TextBlock>
+        <TextBlock Grid.Row="0" Padding="10" FontSize="28" Foreground="White" Text="Simple Trader" Background="{StaticResource BrushPrimary1}"></TextBlock>
         <Grid Grid.Row="1" Background="{StaticResource BrushPrimary2}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
