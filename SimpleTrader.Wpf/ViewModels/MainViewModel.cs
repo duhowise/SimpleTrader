@@ -6,6 +6,7 @@ namespace SimpleTrader.Wpf.ViewModels
     {
         public MainViewModel()
         {
+            Navigator.UpdateViewModelCommand.Execute(ViewType.Home);
         }
         public INavigator Navigator { get; set; }=new Navigator();
     }

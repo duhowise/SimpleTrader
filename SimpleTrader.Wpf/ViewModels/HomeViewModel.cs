@@ -2,11 +2,11 @@
 {
     public class HomeViewModel:ViewModelBase
     {
-        private readonly MajorIndexViewModel _majorIndexViewModel;
+        public MajorIndexListingViewModel MajorIndexListingViewModel { get; set; }
 
-        public HomeViewModel(MajorIndexViewModel majorIndexViewModel)
+        public HomeViewModel(MajorIndexListingViewModel majorIndexListingViewModel)
         {
-            _majorIndexViewModel = majorIndexViewModel;
+            MajorIndexListingViewModel = majorIndexListingViewModel;
         }
     }
 }

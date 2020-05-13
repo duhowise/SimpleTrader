@@ -5,8 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SimpleTrader.Wpf"
              xmlns:nav="clr-namespace:SimpleTrader.Wpf.State.Navigators"
+             xmlns:vm="clr-namespace:SimpleTrader.Wpf.ViewModels"
+             xmlns:converters="clr-namespace:SimpleTrader.Wpf.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+            <converters:EqualValueToParameterConverter x:Key="EqualValueToParameterConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.Resources>
             <Style TargetType="RadioButton" BasedOn="{StaticResource NavButton}"></Style>
@@ -24,8 +29,8 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <RadioButton Grid.Column="0" Content="Home" Command="{Binding UpdateViewModelCommand}" CommandParameter="{x:Static nav:ViewType.Home}"></RadioButton>
-            <RadioButton Grid.Column="1" Content="Portfolio" Command="{Binding UpdateViewModelCommand }" CommandParameter="{x:Static nav:ViewType.Portfolio}"></RadioButton>
+            <RadioButton Grid.Column="0" IsChecked="{Binding CurrentViewModel,ConverterParameter={x:Type vm:HomeViewModel},Converter={StaticResource EqualValueToParameterConverter},Mode=OneWay}" Content="Home" Command="{Binding UpdateViewModelCommand}" CommandParameter="{x:Static nav:ViewType.Home}"></RadioButton>
+            <RadioButton Grid.Column="1" Content="Portfolio" IsChecked="{Binding CurrentViewModel,ConverterParameter={x:Type vm:PortfolioViewModel},Converter={StaticResource EqualValueToParameterConverter},Mode=OneWay}" Command="{Binding UpdateViewModelCommand }" CommandParameter="{x:Static nav:ViewType.Portfolio}"></RadioButton>
             <RadioButton Grid.Column="2" Content="Buy"></RadioButton>
             <RadioButton Grid.Column="3" Content="Sell"></RadioButton>
         </Grid>
