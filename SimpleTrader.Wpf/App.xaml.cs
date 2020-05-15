@@ -17,6 +17,8 @@ namespace SimpleTrader.Wpf
             {
                 DataContext = new MainViewModel()
             };
+
+          var price=  new StockPriceService().GetPrice("AAPL");
             window.Show();
             base.OnStartup(e);
         }
