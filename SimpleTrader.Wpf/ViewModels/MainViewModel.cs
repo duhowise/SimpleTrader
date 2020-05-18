@@ -4,10 +4,11 @@ namespace SimpleTrader.Wpf.ViewModels
 {
     public class MainViewModel:ViewModelBase
     {
-        public MainViewModel()
+        public INavigator Navigator { get; set; }
+        public MainViewModel(INavigator navigator)
         {
+            Navigator = navigator;
             Navigator.UpdateViewModelCommand.Execute(ViewType.Home);
         }
-        public INavigator Navigator { get; set; }=new Navigator();
     }
 }

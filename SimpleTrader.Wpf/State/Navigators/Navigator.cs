@@ -2,16 +2,19 @@
 using SimpleTrader.Wpf.Commands;
 using SimpleTrader.Wpf.Models;
 using SimpleTrader.Wpf.ViewModels;
+using SimpleTrader.Wpf.ViewModels.Factories;
 
 namespace SimpleTrader.Wpf.State.Navigators
 {
     public class Navigator: ObservableObject,INavigator
     {
+        private readonly ISimpleTraderViewModelAbstractFactory _viewModelAbstractFactory;
         private ViewModelBase _currentViewModel;
 
-        public Navigator()
+        public Navigator(ISimpleTraderViewModelAbstractFactory viewModelAbstractFactory)
         {
-            
+            _viewModelAbstractFactory = viewModelAbstractFactory;
+            UpdateViewModelCommand=new UpdateCurrentViewModelCommand(this,viewModelAbstractFactory);
         }
 
         public ViewModelBase CurrentViewModel
@@ -24,7 +27,7 @@ namespace SimpleTrader.Wpf.State.Navigators
             }
         }
 
-        public ICommand UpdateViewModelCommand=>new UpdateCurrentViewModelCommand(this);
+        public ICommand UpdateViewModelCommand { get; set; }
        
         
         
