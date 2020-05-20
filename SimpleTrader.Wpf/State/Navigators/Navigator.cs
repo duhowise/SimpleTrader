@@ -8,13 +8,13 @@ namespace SimpleTrader.Wpf.State.Navigators
 {
     public class Navigator: ObservableObject,INavigator
     {
-        private readonly ISimpleTraderViewModelAbstractFactory _viewModelAbstractFactory;
+        private readonly IRootSimpleTraderViewModelFactory _viewModelFactory;
         private ViewModelBase _currentViewModel;
 
-        public Navigator(ISimpleTraderViewModelAbstractFactory viewModelAbstractFactory)
+        public Navigator(IRootSimpleTraderViewModelFactory viewModelFactory)
         {
-            _viewModelAbstractFactory = viewModelAbstractFactory;
-            UpdateViewModelCommand=new UpdateCurrentViewModelCommand(this,viewModelAbstractFactory);
+            _viewModelFactory = viewModelFactory;
+            UpdateViewModelCommand=new UpdateCurrentViewModelCommand(this,viewModelFactory);
         }
 
         public ViewModelBase CurrentViewModel

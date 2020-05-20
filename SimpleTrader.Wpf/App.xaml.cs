@@ -41,7 +41,7 @@ namespace SimpleTrader.Wpf
             services.AddSingleton<IMajorIndexService, MajorIndexService>();
 
 
-            services.AddSingleton<ISimpleTraderViewModelAbstractFactory,SimpleTraderViewModelAbstractFactory>();
+            services.AddSingleton<IRootSimpleTraderViewModelFactory,RootSimpleTraderViewModelFactory>();
             services.AddSingleton<ISimpleTraderViewModelFactory<HomeViewModel>,HomeViewModelFactory>();
             services.AddSingleton<ISimpleTraderViewModelFactory<PortfolioViewModel>,PortFolioViewModelFactory>();
             services.AddSingleton<ISimpleTraderViewModelFactory<MajorIndexListingViewModel>,MajorIndexListingViewModelFactory>();
@@ -49,6 +49,7 @@ namespace SimpleTrader.Wpf
 
             services.AddScoped<MainWindow>(x=>new MainWindow(x.GetRequiredService<MainViewModel>()));
             services.AddScoped<MainViewModel>();
+            services.AddScoped<BuyViewModel>();
             services.AddScoped<INavigator, Navigator>();
             return services.BuildServiceProvider();
         }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
-using SimpleTrader.FinancialModellingPrepApi.Services;
 using SimpleTrader.Wpf.State.Navigators;
-using SimpleTrader.Wpf.ViewModels;
 using SimpleTrader.Wpf.ViewModels.Factories;
 
 namespace SimpleTrader.Wpf.Commands
@@ -10,12 +8,12 @@ namespace SimpleTrader.Wpf.Commands
     public class UpdateCurrentViewModelCommand :ICommand
     {
         private readonly INavigator _navigator;
-        private readonly ISimpleTraderViewModelAbstractFactory _viewModelAbstractFactory;
+        private readonly IRootSimpleTraderViewModelFactory _viewModelFactory;
 
-        public UpdateCurrentViewModelCommand(INavigator navigator,ISimpleTraderViewModelAbstractFactory viewModelAbstractFactory)
+        public UpdateCurrentViewModelCommand(INavigator navigator,IRootSimpleTraderViewModelFactory viewModelFactory)
         {
             _navigator = navigator;
-            _viewModelAbstractFactory = viewModelAbstractFactory;
+            _viewModelFactory = viewModelFactory;
         }
         public bool CanExecute(object parameter)
         {
@@ -26,7 +24,7 @@ namespace SimpleTrader.Wpf.Commands
         {
             if (parameter is ViewType viewType)
             {
-                _navigator.CurrentViewModel = _viewModelAbstractFactory.CreateViewModel(viewType);
+                _navigator.CurrentViewModel = _viewModelFactory.CreateViewModel(viewType);
             }
         }
 

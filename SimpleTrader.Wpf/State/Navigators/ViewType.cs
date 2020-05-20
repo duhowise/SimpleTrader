@@ -3,6 +3,7 @@
     public enum ViewType
     {
         Home,
-        Portfolio
+        Portfolio,
+        Buy
     }
 }
