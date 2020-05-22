@@ -9,10 +9,13 @@
         Title="Simple Trader" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <controls:NavigationBar Grid.Row="0" DataContext="{Binding Navigator}"></controls:NavigationBar>
-        <ContentControl Grid.Row="1" Content="{Binding Navigator.CurrentViewModel }"/>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" >
+            <ContentControl Grid.Row="1" Content="{Binding Navigator.CurrentViewModel }"/>
+
+        </ScrollViewer>
     </Grid>
 </Window>

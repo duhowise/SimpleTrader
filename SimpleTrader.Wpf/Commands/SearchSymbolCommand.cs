@@ -26,6 +26,7 @@ namespace SimpleTrader.Wpf.Commands
             try
             {
                 var stockPrice = await _stockPriceService.GetPrice(_buyViewModel.Symbol).ConfigureAwait(false);
+                _buyViewModel.SearchResultSymbol = _buyViewModel.Symbol.ToUpperInvariant();
                 _buyViewModel.StockPrice = stockPrice;
             }
             catch (Exception e)
