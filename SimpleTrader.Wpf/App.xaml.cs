@@ -3,6 +3,7 @@ using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using SimpleTrader.Domain.Models;
 using SimpleTrader.Domain.Services;
+using SimpleTrader.Domain.Services.AuthenticationServices;
 using SimpleTrader.Domain.Services.TransactionServices;
 using SimpleTrader.EntityFramework;
 using SimpleTrader.EntityFramework.Services;
@@ -21,7 +22,8 @@ namespace SimpleTrader.Wpf
         protected override async void OnStartup(StartupEventArgs e)
         {
             var serviceProvider = CreateServiceProvider();
-
+            var auth = serviceProvider.GetService<IAuthenticationService>();
+            auth.Login( "duhp", "qwe123");
             var window = serviceProvider.GetRequiredService<MainWindow>();
             
 
@@ -35,9 +37,11 @@ namespace SimpleTrader.Wpf
 
             services.AddSingleton<SimpleTraderDbContextFactory>();
             services.AddSingleton<IDataService<Account>, AccountDataService>();
+            services.AddSingleton<IAuthenticationService, AuthenticationService>();
             services.AddSingleton<IStockPriceService, StockPriceService>();
             services.AddSingleton<IBuyStockService, BuyStockService>();
             services.AddSingleton<IDataService<Account>, AccountDataService>();
+            services.AddSingleton<IAccountService, AccountDataService>();
             services.AddSingleton<IMajorIndexService, MajorIndexService>();
 
 

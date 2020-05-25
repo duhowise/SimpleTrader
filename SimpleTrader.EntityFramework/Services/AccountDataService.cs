@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SimpleTrader.Domain.Models;
@@ -7,7 +8,7 @@ using SimpleTrader.EntityFramework.Services.Common;
 
 namespace SimpleTrader.EntityFramework.Services
 {
-    public class AccountDataService : NonQueryDataService<Account>, IDataService<Account>
+    public class AccountDataService : NonQueryDataService<Account>, IDataService<Account>,IAccountService
     {
         private readonly SimpleTraderDbContextFactory _contextFactory;
 
@@ -19,7 +20,9 @@ namespace SimpleTrader.EntityFramework.Services
         public async Task<IEnumerable<Account>> GetAll()
         {
             await using var context = _contextFactory.CreateDbContext(new[] {""});
-            var list = await context.Accounts.Include(x => x.AssetTransactions).Include(x => x.AccountHolder)
+            var list = await context.Accounts
+                .Include(x=>x.AccountHolder)
+                .Include(x => x.AssetTransactions).Include(x => x.AccountHolder)
                 .ToListAsync();
             return list;
         }
@@ -27,9 +30,24 @@ namespace SimpleTrader.EntityFramework.Services
         public async Task<Account> Get(int id)
         {
             await using var context = _contextFactory.CreateDbContext(new[] {""});
-            var entity = await context.Accounts.Include(x => x.AssetTransactions).Include(x => x.AccountHolder)
+            var entity = await context.Accounts
+                .Include(x => x.AccountHolder)
+                    .Include(x=>x.AssetTransactions).Include(x => x.AssetTransactions).Include(x => x.AccountHolder)
                 .FirstOrDefaultAsync(x => x.Id == id);
             return entity;
+        }
+
+        public async Task<Account> GetByUserName(string username)
+        {
+            await using var context = _contextFactory.CreateDbContext(new[] {""});
+            return await context.Accounts.Include(a => a.AccountHolder)
+                .FirstOrDefaultAsync(x => x.AccountHolder.Username == username);
+        }
+
+        public async Task<Account> GetByEmail(string email)
+        {
+            await using var context = _contextFactory.CreateDbContext(new[] { "" });
+            return await context.Accounts.Include(a=>a.AccountHolder).Include(x=>x.AssetTransactions).Include(x=>x.AccountHolder).FirstOrDefaultAsync(x=>x.AccountHolder.Email==email);
         }
     }
 }
