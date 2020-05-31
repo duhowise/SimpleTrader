@@ -22,13 +22,13 @@ namespace SimpleTrader.Domain.Services.AuthenticationServices
                 return RegistrationResult.PasswordsDoNotMatch;
             }
 
-            var emailAccount = _accountDataService.GetByEmail(email);
+            var emailAccount =await _accountDataService.GetByEmail(email);
             if (emailAccount!=null)
             {
                return RegistrationResult.EmailAlreadyExists;
             }
 
-            var userAccount = _accountDataService.GetByUserName(username);
+            var userAccount =await _accountDataService.GetByUserName(username);
             if (userAccount != null)
             {
                 return RegistrationResult.UserNameAlreadyExists;
@@ -56,15 +56,17 @@ namespace SimpleTrader.Domain.Services.AuthenticationServices
         public async Task<Account> Login(string username, string password)
         {
 
-            var account=await _accountDataService.GetByUserName(username);
-            var passwordsMatch = BCrypt.Net.BCrypt.Verify(password,account.AccountHolder.PasswordHash);
+            var storedAccount=await _accountDataService.GetByUserName(username);
+            if (storedAccount == null) throw new UserNotFoundException(username);
+
+            var passwordsMatch = BCrypt.Net.BCrypt.Verify(password,storedAccount.AccountHolder.PasswordHash);
 
             if (!passwordsMatch)
             {
                 throw  new InvalidPasswordException(username);
             }
 
-            return account;
+            return storedAccount;
         }
     }
 }
